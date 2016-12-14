@@ -14,7 +14,7 @@ class DeleteSubscriber extends Request
 
     public function __construct($listId, $subscriberEmail)
     {
-        $endPoint = sprintf(self::END_POINT, md5($subscriberEmail));
+        $endPoint = sprintf(self::END_POINT, $listId, md5($subscriberEmail));
         parent::__construct(HTTPMethod::DELETE, $endPoint);
     }
 }
