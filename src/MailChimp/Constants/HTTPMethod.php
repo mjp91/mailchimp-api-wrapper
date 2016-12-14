@@ -1,15 +1,14 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: mpearsall
- * Date: 14/12/2016
- * Time: 14:34
- */
+<?php namespace MailChimp\Constants;
 
-namespace MailChimp\Constants;
-
-
-class HTTPMethod
+final class HTTPMethod
 {
+    const GET = 'GET';
+    const POST = 'POST';
+    const PUT = 'PUT';
+    const PATCH = 'PATCH';
+    const DELETE = 'DELETE';
 
+    private function __construct()
+    {
+    }
 }

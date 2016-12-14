@@ -1,5 +1,10 @@
 {
+  "name": "mjp91/mailchimp-api-wrapper",
+  "license": "MIT",
   "require": {
     "guzzlehttp/guzzle": "6.2.*"
+  },
+  "autoload": {
+    "psr-4": {"MailChimp\\": "src/MailChimp"}
   }
 }

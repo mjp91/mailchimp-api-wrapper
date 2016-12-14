@@ -1,15 +1,20 @@
-<?php
+<?php namespace MailChimp\Request\Subscribers;
+
+use MailChimp\Constants\HTTPMethod;
+use MailChimp\Request\Request;
+
 /**
- * Created by PhpStorm.
- * User: mpearsall
- * Date: 14/12/2016
- * Time: 15:46
+ * Class DeleteSubscriber
+ * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/
+ * @package MailChimp\Request\Subscribers
  */
-
-namespace MailChimp\Request\Subscribers;
-
-
-class DeleteSubscriber
+class DeleteSubscriber extends Request
 {
+    const END_POINT = "lists/%s/members/%s";
 
+    public function __construct($listId, $subscriberEmail)
+    {
+        $endPoint = sprintf(self::END_POINT, md5($subscriberEmail));
+        parent::__construct(HTTPMethod::DELETE, $endPoint);
+    }
 }

@@ -1,15 +1,20 @@
-<?php
+<?php namespace MailChimp\Request\Subscribers;
+
+use MailChimp\Constants\HTTPMethod;
+use MailChimp\Request\Request;
+
 /**
- * Created by PhpStorm.
- * User: mpearsall
- * Date: 14/12/2016
- * Time: 15:13
+ * Class CreateSubscriber
+ * @see http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/
+ * @package MailChimp\Request\Subscribers
  */
-
-namespace MailChimp\Request\Subscribers;
-
-
-class CreateSubscriber
+class CreateSubscriber extends Request
 {
+    const END_POINT = "lists/%s/members";
 
+    public function __construct($listId)
+    {
+        $endPoint = sprintf(self::END_POINT, $listId);
+        parent::__construct(HTTPMethod::POST, $endPoint);
+    }
 }
