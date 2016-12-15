@@ -1,4 +1,4 @@
-<?php namespace MailChimp\Request\Subscribers;
+<?php namespace MailChimp\Request\Lists\Subscribers;
 
 use MailChimp\Constants\HTTPMethod;
 use MailChimp\Request\Request;
@@ -10,11 +10,13 @@ use MailChimp\Request\Request;
  */
 class DeleteSubscriber extends Request
 {
-    const END_POINT = "lists/%s/members/%s";
+    const END_POINT = "lists/{list_id}/members/{subscriber_hash}";
 
     public function __construct($listId, $subscriberEmail)
     {
-        $endPoint = sprintf(self::END_POINT, $listId, md5($subscriberEmail));
-        parent::__construct(HTTPMethod::DELETE, $endPoint);
+        parent::__construct(HTTPMethod::DELETE, self::END_POINT, array(
+            "list_id" => $listId,
+            "subscriber_hash" => md5($subscriberEmail)
+        ));
     }
 }

@@ -1,4 +1,4 @@
-<?php namespace MailChimp\Request\Subscribers;
+<?php namespace MailChimp\Request\Lists\Subscribers;
 
 use MailChimp\Constants\HTTPMethod;
 use MailChimp\Request\Request;
@@ -10,11 +10,10 @@ use MailChimp\Request\Request;
  */
 class ReadSubscribers extends Request
 {
-    const END_POINT = "lists/%s/members";
+    const END_POINT = "lists/{list_id}/members";
 
     public function __construct($listId)
     {
-        $endPoint = sprintf(self::END_POINT, $listId);
-        parent::__construct(HTTPMethod::GET, $endPoint);
+        parent::__construct(HTTPMethod::GET, self::END_POINT, array("list_id" => $listId));
     }
 }

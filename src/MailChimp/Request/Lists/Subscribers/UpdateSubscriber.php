@@ -1,4 +1,4 @@
-<?php namespace MailChimp\Request\Subscribers;
+<?php namespace MailChimp\Request\Lists\Subscribers;
 
 use MailChimp\Request\Request;
 
@@ -9,11 +9,13 @@ use MailChimp\Request\Request;
  */
 class UpdateSubscriber extends Request
 {
-    const END_POINT = "lists/%s/members/%s";
+    const END_POINT = "lists/{list_id}/members/{subscriber_hash}";
 
     public function __construct($httpMethod, $listId, $subscriberEmail)
     {
-        $endPoint = sprintf(self::END_POINT, $listId, md5($subscriberEmail));
-        parent::__construct($httpMethod, $endPoint);
+        parent::__construct($httpMethod, self::END_POINT, array(
+            "list_id" => $listId,
+            "subscriber_hash" => md5($subscriberEmail)
+        ));
     }
 }

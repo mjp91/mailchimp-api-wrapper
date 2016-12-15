@@ -14,10 +14,16 @@ abstract class Request
     private $endPoint;
     private $requestBody;
 
-    public function __construct($httpMethod = HTTPMethod::GET, $endPoint)
+    public function __construct($httpMethod = HTTPMethod::GET, $endPoint, array $variables = null)
     {
         if (!$this->isHTTPMethodValid($httpMethod)) {
             throw new \InvalidArgumentException("{$httpMethod} is not an acceptable HTTP method");
+        }
+
+        if ($variables !== null) {
+            foreach ($variables as $key => $value) {
+                $endPoint = str_replace("{{$key}}", $value, $endPoint);
+            }
         }
 
         $this->httpMethod = $httpMethod;
