@@ -1,6 +1,6 @@
 <?php namespace MailChimp;
 
-use GuzzleHttp\Client;
+use Guzzle\Http\Client;
 use MailChimp\Exceptions\RequestFailureException;
 use MailChimp\Request\Request;
 
@@ -25,28 +25,35 @@ class RequestHandler
         $this->username = $username;
     }
 
+    /**
+     * Constructs and sends an API call built from the Request object. Uses Guzzle 3.8.* for PHP 5.3 compatibility.
+     *
+     * @param Request $request
+     * @return array response
+     * @throws RequestFailureException
+     */
     public function handle(Request $request)
     {
-        $client = new Client(array(
-            'base_uri' => $this->apiURL
-        ));
+        $client = new Client($this->apiURL);
 
         $parameters = array(
-            'auth' => array($this->username, $this->apiKey),
-            'http_errors' => false,
+            'exceptions' => false,
         );
 
         $requestBody = $request->getRequestBody();
 
         // does the request have a body?
         if ($requestBody !== null && !empty($requestBody)) {
-            $parameters['json'] = $requestBody;
+            $parameters['headers'] = array("application/json");
+            $parameters['body'] = json_encode($requestBody);
         }
 
-        $response = $client->request($request->getHttpMethod(), $request->getEndPoint(), $parameters);
+        $request = $client->createRequest($request->getHttpMethod(), $request->getEndPoint(), null, null, $parameters);
+        $request->setAuth($this->username, $this->apiKey);
+        $response = $request->send();
 
         $httpStatusCode = $response->getStatusCode();
-        $responseBody = \GuzzleHttp\json_decode($response->getBody(), true);
+        $responseBody = $response->json();
 
         if (!in_array($httpStatusCode, array(200, 201))) {
             throw new RequestFailureException($httpStatusCode, "Request failed", $responseBody);

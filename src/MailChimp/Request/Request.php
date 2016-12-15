@@ -36,7 +36,7 @@ abstract class Request
     /**
      * @param string $httpMethod
      */
-    public function setHttpMethod($httpMethod)
+    protected function setHttpMethod($httpMethod)
     {
         $this->httpMethod = $httpMethod;
     }
@@ -52,7 +52,7 @@ abstract class Request
     /**
      * @param string $endPoint
      */
-    public function setEndPoint($endPoint)
+    protected function setEndPoint($endPoint)
     {
         $this->endPoint = $endPoint;
     }
