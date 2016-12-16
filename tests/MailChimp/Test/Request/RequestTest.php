@@ -18,7 +18,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->expectedEndPoint = "lists/" . self::LIST_ID . "/members/" . md5(self::EMAIL_ADDRESS);
-        $this->request = new ReadSubscriber("abc123", "test@example.com");
+        $this->request = new ReadSubscriber(self::LIST_ID, self::EMAIL_ADDRESS);
     }
 
     /**
