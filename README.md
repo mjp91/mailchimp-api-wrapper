@@ -14,5 +14,11 @@ $requestBody = array("..." => "...");
 $subscriberGet->setRequestBody($requestBody);
 
 // send the request, returns an associative array
-$response = $requestHandler->handle($subscriberGet);
+try {
+    $response = $requestHandler->handle($subscriberGet);
+} catch (RequestFailureException $ex) {
+    // any non-200 response will cause a RequestFailure exception, which details the failure 
+    $httpStatusCode = $ex->getHttpStatusCode();
+    $response = $ex->getResponseBody();
+}
 ```
