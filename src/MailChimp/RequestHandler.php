@@ -44,7 +44,7 @@ class RequestHandler
 
         // does the request have a body?
         if ($requestBody !== null && !empty($requestBody)) {
-            $parameters['headers'] = array("application/json");
+            $parameters['headers'] = array("Content-Type" => "application/json");
             $parameters['body'] = json_encode($requestBody);
         }
 
