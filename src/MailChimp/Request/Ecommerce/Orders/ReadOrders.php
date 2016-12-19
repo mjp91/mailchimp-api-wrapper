@@ -1,18 +1,18 @@
 <?php namespace MailChimp\Request\Ecommerce\Orders;
 
-use MailChimp\Request\PostRequest;
+use MailChimp\Request\GetRequest;
 
 /**
- * Class CreateOrder
+ * Class ReadOrders
  * @see https://developer.mailchimp.com/documentation/mailchimp/reference/ecommerce/stores/orders/
  * @package MailChimp\Request\Ecommerce\Orders
  */
-class CreateOrder extends PostRequest
+class ReadOrders extends GetRequest
 {
     const END_POINT = "ecommerce/stores/{store_id}/orders";
 
     /**
-     * CreateOrder constructor.
+     * ReadOrders constructor.
      * @param string $storeId - the store's id
      */
     public function __construct($storeId)

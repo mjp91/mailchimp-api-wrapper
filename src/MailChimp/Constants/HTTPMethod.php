@@ -1,5 +1,11 @@
 <?php namespace MailChimp\Constants;
 
+/**
+ * HTTP method constants
+ *
+ * Class HTTPMethod
+ * @package MailChimp\Constants
+ */
 final class HTTPMethod
 {
     const GET = 'GET';

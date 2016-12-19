@@ -14,14 +14,14 @@ abstract class Request
     private $endPoint;
     private $requestBody;
 
-    public function __construct($httpMethod = HTTPMethod::GET, $endPoint, array $variables = null)
+    public function __construct($httpMethod = HTTPMethod::GET, $endPoint, array $pathParameters = null)
     {
         if (!$this->isHTTPMethodValid($httpMethod)) {
             throw new \InvalidArgumentException("{$httpMethod} is not an acceptable HTTP method");
         }
 
-        if ($variables !== null) {
-            foreach ($variables as $key => $value) {
+        if ($pathParameters !== null) {
+            foreach ($pathParameters as $key => $value) {
                 $endPoint = str_replace("{{$key}}", $value, $endPoint);
             }
         }
@@ -37,14 +37,6 @@ abstract class Request
     public function getHttpMethod()
     {
         return $this->httpMethod;
-    }
-
-    /**
-     * @param string $httpMethod
-     */
-    protected function setHttpMethod($httpMethod)
-    {
-        $this->httpMethod = $httpMethod;
     }
 
     /**
