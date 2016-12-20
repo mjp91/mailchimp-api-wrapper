@@ -1,6 +1,7 @@
 <?php namespace MailChimp;
 
 use MailChimp\Request\Request;
+use MailChimp\Response\Response;
 
 /**
  * Blueprint for handling MailChimp API requests
@@ -10,5 +11,9 @@ use MailChimp\Request\Request;
  */
 interface RequestHandler
 {
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function handle(Request $request);
 }

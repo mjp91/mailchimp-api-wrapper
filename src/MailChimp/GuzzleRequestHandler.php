@@ -1,9 +1,11 @@
 <?php namespace MailChimp;
 
 use Guzzle\Http\Client;
+use MailChimp\Constants\HTTPStatusCode;
 use MailChimp\Exceptions\RequestFailureException;
 use MailChimp\Request\GetRequest;
 use MailChimp\Request\Request;
+use MailChimp\Response\Response;
 
 /**
  * Guzzle 3.8.* implementation of MailChimp API request handler. Uses Guzzle 3.8.* for PHP 5.3 compatibility.
@@ -36,7 +38,7 @@ class GuzzleRequestHandler implements RequestHandler
      * Constructs and sends an API call built from the Request object.
      *
      * @param Request $request
-     * @return array response
+     * @return Response response
      * @throws RequestFailureException
      */
     public function handle(Request $request)
@@ -70,10 +72,17 @@ class GuzzleRequestHandler implements RequestHandler
         $httpStatusCode = $response->getStatusCode();
         $responseBody = $response->json();
 
-        if (!in_array($httpStatusCode, array(200, 201))) {
+        // unexpected responses which should cause an exception to throw
+        $invalidResponseStatuses = array(
+            HTTPStatusCode::UNAUTHORIZED,
+            HTTPStatusCode::FORBIDDEN,
+            HTTPStatusCode::INTERNAL_SERVER_ERROR
+        );
+
+        if (in_array($httpStatusCode, $invalidResponseStatuses)) {
             throw new RequestFailureException($httpStatusCode, "Request failed", $responseBody);
         }
 
-        return $responseBody;
+        return new Response($httpStatusCode, $responseBody);
     }
 }
