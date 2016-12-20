@@ -16,9 +16,11 @@ $subscriberGet->setRequestBody($requestBody);
 // send the request, returns an associative array
 try {
     $response = $requestHandler->handle($subscriberGet);
+    // $response->getHTTPCode();
+    // $response->getResponseBody();
 } catch (RequestFailureException $ex) {
-    // any non-200 response will cause a RequestFailure exception, which details the failure 
-    $httpStatusCode = $ex->getHttpStatusCode();
-    $response = $ex->getResponseBody();
+    // a HTTP code returned indicating failure will cause an exception
+    $httpCode = $ex->getResponse()->getHttpCode();
+    $response = $ex->getResponse()->getResponseBody();
 }
 ```

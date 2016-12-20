@@ -67,10 +67,9 @@ class GuzzleRequestHandler implements RequestHandler
 
         $request = $client->createRequest($request->getHttpMethod(), $request->getEndPoint(), null, null, $parameters);
         $request->setAuth($this->username, $this->apiKey);
-        $response = $request->send();
+        $res = $request->send();
 
-        $httpStatusCode = $response->getStatusCode();
-        $responseBody = $response->json();
+        $response = new Response($res->getStatusCode(), $res->json());
 
         // unexpected responses which should cause an exception to throw
         $invalidResponseStatuses = array(
@@ -80,10 +79,10 @@ class GuzzleRequestHandler implements RequestHandler
             HTTPStatusCode::INTERNAL_SERVER_ERROR
         );
 
-        if (in_array($httpStatusCode, $invalidResponseStatuses)) {
-            throw new RequestFailureException($httpStatusCode, "Request failed", $responseBody);
+        if (in_array($response->getHttpCode(), $invalidResponseStatuses)) {
+            throw new RequestFailureException($response);
         }
 
-        return new Response($httpStatusCode, $responseBody);
+        return $response;
     }
 }

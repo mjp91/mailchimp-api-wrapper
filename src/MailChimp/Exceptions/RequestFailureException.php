@@ -1,5 +1,7 @@
 <?php namespace MailChimp\Exceptions;
 
+use MailChimp\Response\Response;
+
 /**
  * Represents a request returning a result other than OK
  *
@@ -8,51 +10,32 @@
  */
 class RequestFailureException extends \Exception
 {
-    private $httpStatusCode;
-    private $responseBody;
+    private $response;
 
     /**
      * RequestFailureException constructor.
-     * @param string $httpStatusCode - the HTTP status code
-     * @param string $message - description of error
-     * @param array $responseBody - the response body
+     * @param Response $response
+     * @param string|null $message - description of error
      */
-    public function __construct($httpStatusCode, $message, $responseBody = null)
+    public function __construct(Response $response, $message = null)
     {
         parent::__construct($message);
-        $this->httpStatusCode = $httpStatusCode;
-        $this->responseBody = $responseBody;
+        $this->response = $response;
     }
 
     /**
-     * @return string
+     * @return Response
      */
-    public function getHttpStatusCode()
+    public function getResponse()
     {
-        return $this->httpStatusCode;
+        return $this->response;
     }
 
     /**
-     * @param string $httpStatusCode
+     * @param Response $response
      */
-    public function setHttpStatusCode($httpStatusCode)
+    public function setResponse($response)
     {
-        $this->httpStatusCode = $httpStatusCode;
-    }
-
-    /**
-     * @return array
-     */
-    public function getResponseBody()
-    {
-        return $this->responseBody;
-    }
-
-    /**
-     * @param array $responseBody
-     */
-    public function setResponseBody($responseBody)
-    {
-        $this->responseBody = $responseBody;
+        $this->response = $response;
     }
 }
