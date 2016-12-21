@@ -11,6 +11,10 @@ class ReadProducts extends GetRequest
 {
     const END_POINT = "commerce/stores/{store_id}/products";
 
+    /**
+     * ReadProducts constructor.
+     * @param string $storeId - the store's id
+     */
     public function __construct($storeId)
     {
         parent::__construct(self::END_POINT, array("store_id" => $storeId));
