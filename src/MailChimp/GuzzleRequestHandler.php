@@ -73,7 +73,6 @@ class GuzzleRequestHandler implements RequestHandler
 
         // unexpected responses which should cause an exception to throw
         $invalidResponseStatuses = array(
-            HTTPStatusCode::BAD_REQUEST,
             HTTPStatusCode::UNAUTHORIZED,
             HTTPStatusCode::FORBIDDEN,
             HTTPStatusCode::INTERNAL_SERVER_ERROR
