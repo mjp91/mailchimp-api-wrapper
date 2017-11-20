@@ -1,7 +1,7 @@
-#MailChimp API Wrapper
+# MailChimp API Wrapper
 Lightweight wrapper library for MailChimp API
 
-##Example Usage
+## Example Usage
 ```php
 // construct the request handler, passing in data centre, username and API key
 $requestHandler = new \MailChimp\RequestHandler("us14", "you@example.com", "abc123");
