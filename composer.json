@@ -18,5 +18,10 @@
     "psr-4": {
       "MailChimp\\": "src/MailChimp"
     }
-  }
+  },
+  "config": {
+    "platform": {
+      "php": "5.3.*"
+    }
+  },
 }
